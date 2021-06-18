@@ -1,23 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from './Header';
+import Player from './Player';
+import { useState } from 'react';
 
-function App() {
+const App = (props) => {
+
+  const [players, setPlayers] = useState([
+    {
+      name: 'Shaneen',
+      id: 1
+    },
+    {
+      name: 'Mark',
+      id: 2
+    },
+    {
+      name: 'Bianx',
+      id: 3
+    }
+  ])
+
+  const handleRemovePlayer = (id) => {
+    setPlayers(players => players.filter(p => p.id !== id))
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="scoreboard">
+      <Header title="Scoreboard" totalPlayers={players.length} />
+
+      {/* Players list */}
+      {players.map(player => 
+        <Player
+          name={player.name}
+          id={player.id}
+          key={player.id.toString()}
+          removePlayer={handleRemovePlayer}
+        />
+      )}
     </div>
   );
 }
